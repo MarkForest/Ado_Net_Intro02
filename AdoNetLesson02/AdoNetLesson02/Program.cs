@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Configuration;
 
 namespace AdoNetLesson02
 {
     class Program
     {
+        private static string connString;
         static SqlConnection sqlConnection = null;
         static void Main(string[] args)
         {
-            sqlConnection = new SqlConnection();
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "CR4-00";
-            builder.InitialCatalog = "Library";
-            builder.IntegratedSecurity = true;
-            sqlConnection = new SqlConnection(builder.ConnectionString);
+            connString = ConfigurationManager.ConnectionStrings["MyConnString"].ConnectionString;
+            sqlConnection = new SqlConnection(connString);
             ReadData();
             Console.ReadKey();
         }
